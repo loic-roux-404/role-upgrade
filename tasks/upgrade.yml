@@ -1,12 +1,1 @@
-- name: Prepare response
-  shell: echo "grub-pc grub-pc/install_devices multiselect /dev/vda" | debconf-set-selections
-
-- name: Upgrade required package
-  ansible.builtin.apt:
-    name:
-      - debconf-utils
-      - grub-pc
-
-- name: Upgrade debian
-  ansible.builtin.apt:
-    upgrade: safe
+---

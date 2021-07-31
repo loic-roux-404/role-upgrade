@@ -1,0 +1,27 @@
+---
+# - name: Prepare debconf response
+#   shell: echo "grub-pc grub-pc/install_devices multiselect /dev/sda" | debconf-set-selections
+
+# - name: Upgrade required packages
+#   ansible.builtin.apt:
+#     name:
+#       - debconf-utils
+#       - grub-pc
+
+- name: Upgrade debian
+  ansible.builtin.apt:
+    upgrade: dist
+    dpkg_options: 'force-confold,force-confdef'
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: yes
